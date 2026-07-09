@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -9,13 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --night:#090D1F;
-    --night-2:#0E1430;
-    --gold:#D9B45B;
-    --gold-bright:#F2D488;
-    --ivory:#F3ECDB;
-    --muted:#7C84A6;
-    --emerald:#2FA37E;
+    --night:#090D1F; --night-2:#0E1430;
+    --gold:#D9B45B; --gold-bright:#F2D488;
+    --ivory:#F3ECDB; --muted:#7C84A6;
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{height:100%;overflow:hidden}
@@ -27,19 +24,17 @@
     padding:max(20px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom));
     user-select:none;position:relative;
   }
-  /* نجوم السماء */
   .stars{position:fixed;inset:0;pointer-events:none;z-index:0}
   .stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--ivory);opacity:.35;animation:twinkle 3.5s ease-in-out infinite}
   @keyframes twinkle{0%,100%{opacity:.12}50%{opacity:.5}}
   @media (prefers-reduced-motion:reduce){.stars i{animation:none}}
 
   header{text-align:center;z-index:2}
-  .basmala{font-family:'Amiri',serif;font-size:15px;color:var(--gold);opacity:.85;letter-spacing:.5px}
+  .basmala{font-family:'Amiri',serif;font-size:15px;color:var(--gold);opacity:.85}
   h1{font-family:'Amiri',serif;font-weight:700;font-size:clamp(28px,7vw,38px);margin-top:4px;
      background:linear-gradient(180deg,var(--gold-bright),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
   .rule{width:120px;height:14px;margin:6px auto 0;opacity:.9}
 
-  /* البوصلة */
   .stage{position:relative;z-index:2;width:min(86vw,380px);aspect-ratio:1;display:flex;align-items:center;justify-content:center}
   .halo{position:absolute;inset:-8%;border-radius:50%;
     background:radial-gradient(circle,rgba(217,180,91,.14) 0%,transparent 62%);
@@ -47,13 +42,13 @@
   .stage.aligned .halo{background:radial-gradient(circle,rgba(242,212,136,.32) 0%,transparent 65%)}
   svg{width:100%;height:100%;display:block;overflow:visible}
   #dial{transform-origin:200px 200px;will-change:transform}
-  .stage.aligned .glowring{opacity:1}
   .glowring{opacity:0;transition:opacity .5s}
+  .stage.aligned .glowring{opacity:1}
 
-  /* القراءات */
-  .readout{z-index:2;text-align:center;min-height:118px;display:flex;flex-direction:column;align-items:center;gap:8px}
-  .status{font-size:17px;color:var(--muted);transition:color .4s}
+  .readout{z-index:2;text-align:center;min-height:130px;display:flex;flex-direction:column;align-items:center;gap:8px}
+  .status{font-size:17px;color:var(--muted);transition:color .4s;min-height:26px}
   .status.ok{color:var(--gold-bright);font-weight:700;font-size:19px}
+  .status.warn{color:#E5B87B}
   .numbers{display:flex;gap:28px;align-items:baseline;direction:ltr}
   .num{text-align:center}
   .num b{font-size:clamp(26px,7vw,34px);font-weight:700;color:var(--ivory);font-variant-numeric:tabular-nums;letter-spacing:1px}
@@ -62,7 +57,6 @@
   .distance{font-size:13.5px;color:var(--muted)}
   .distance em{color:var(--gold);font-style:normal;font-weight:700}
 
-  /* شاشة البدء */
   .veil{position:fixed;inset:0;z-index:10;background:rgba(6,8,18,.88);backdrop-filter:blur(10px);
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:32px;text-align:center;
     transition:opacity .5s,visibility .5s}
@@ -75,7 +69,7 @@
     box-shadow:0 0 0 1px rgba(242,212,136,.4),0 8px 30px rgba(217,180,91,.35);
     transition:transform .15s}
   .btn:active{transform:scale(.96)}
-  .note{font-size:12.5px;color:var(--muted);opacity:.8}
+  .note{font-size:12.5px;color:var(--muted);opacity:.8;max-width:300px;line-height:1.8}
   .err{color:#E58B7B;font-size:14px;max-width:300px;line-height:1.8;display:none}
 </style>
 </head>
@@ -102,34 +96,28 @@
       <filter id="soft"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     </defs>
 
-    <!-- الإطار الخارجي -->
     <circle cx="200" cy="200" r="192" fill="url(#face)" stroke="#2A3358" stroke-width="1.5"/>
     <circle cx="200" cy="200" r="184" fill="none" stroke="url(#gld)" stroke-width="2"/>
     <circle cx="200" cy="200" r="176" fill="none" stroke="#2A3358" stroke-width="1"/>
     <circle class="glowring" cx="200" cy="200" r="184" fill="none" stroke="#F2D488" stroke-width="3" filter="url(#soft)"/>
 
-    <!-- القرص الدوّار -->
     <g id="dial">
       <g id="ticks"></g>
-      <!-- نجمة ثمانية (خاتم) -->
       <g opacity=".95">
         <path id="star8a" fill="none" stroke="url(#gld)" stroke-width="1.6"/>
         <path id="star8b" fill="none" stroke="#3A4470" stroke-width="1"/>
         <circle cx="200" cy="200" r="52" fill="none" stroke="#3A4470" stroke-width="1"/>
         <circle cx="200" cy="200" r="46" fill="none" stroke="url(#gld)" stroke-width="1" opacity=".7"/>
       </g>
-      <!-- الجهات -->
       <g font-family="Amiri" font-weight="700" text-anchor="middle" fill="#F3ECDB">
         <text x="200" y="52" font-size="26" fill="url(#gld)">ش</text>
         <text x="200" y="368" font-size="22">ج</text>
         <text x="356" y="208" font-size="22">ق</text>
         <text x="44" y="208" font-size="22">غ</text>
       </g>
-      <!-- مؤشر القبلة -->
       <g id="qibla" transform="rotate(0 200 200)" opacity="0">
         <line x1="200" y1="200" x2="200" y2="78" stroke="url(#gld)" stroke-width="2.5" stroke-dasharray="3 5" opacity=".85"/>
         <g filter="url(#soft)">
-          <!-- الكعبة -->
           <rect x="186" y="34" width="28" height="28" rx="3" fill="#141414" stroke="url(#gld)" stroke-width="2"/>
           <rect x="186" y="41" width="28" height="5.5" fill="url(#gld)"/>
           <path d="M200 72l7 9h-14z" fill="url(#gld)"/>
@@ -137,9 +125,7 @@
       </g>
     </g>
 
-    <!-- إبرة ثابتة أعلى -->
     <path d="M200 10l8 20h-16z" fill="url(#gld)" filter="url(#soft)"/>
-    <!-- المركز -->
     <circle cx="200" cy="200" r="7" fill="url(#gld)"/>
     <circle cx="200" cy="200" r="2.6" fill="#0A0F26"/>
   </svg>
@@ -157,56 +143,58 @@
 <div class="veil" id="veil">
   <svg width="64" height="64" viewBox="0 0 64 64"><rect x="14" y="16" width="36" height="36" rx="4" fill="#141414" stroke="#D9B45B" stroke-width="2.5"/><rect x="14" y="25" width="36" height="7" fill="#D9B45B"/></svg>
   <h2>بوصلة القبلة</h2>
-  <p>اسمح بالوصول إلى الموقع والبوصلة لتحديد اتجاه الكعبة المشرفة بدقة فائقة</p>
+  <p>اسمح بالوصول إلى الموقع والبوصلة لتحديد اتجاه الكعبة المشرفة بدقة</p>
   <button class="btn" id="startBtn">ابدأ الآن</button>
-  <div class="note">تعمل مباشرة دون إنترنت بعد الفتح</div>
+  <div class="note">للدقة: أبعد الهاتف عن المغناطيس والمعادن والأغطية الممغنطة، وحرّكه على شكل ∞ عند البدء</div>
   <div class="err" id="err"></div>
 </div>
 
 <script>
 (function(){
-  const KAABA = {lat:21.422487, lng:39.826206};
-  const $ = id => document.getElementById(id);
-  const stage=$('stage'), status=$('status'), qDegEl=$('qDeg'), hDegEl=$('hDeg'),
-        distEl=$('dist'), veil=$('veil'), err=$('err'), dial=$('dial'), qiblaG=$('qibla');
+  var KAABA={lat:21.422487,lng:39.826206};
+  var $=function(id){return document.getElementById(id)};
+  var stage=$('stage'),statusEl=$('status'),qDegEl=$('qDeg'),hDegEl=$('hDeg'),
+      distEl=$('dist'),veil=$('veil'),err=$('err'),dial=$('dial'),qiblaG=$('qibla');
 
-  /* نجوم */
-  const stars=$('stars');
-  for(let i=0;i<45;i++){const s=document.createElement('i');
+  /* نجوم الخلفية */
+  var stars=$('stars');
+  for(var i=0;i<45;i++){var s=document.createElement('i');
     s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
     s.style.animationDelay=(Math.random()*4)+'s';
     s.style.transform='scale('+(0.5+Math.random())+')';stars.appendChild(s);}
 
-  /* نجمة ثمانية */
-  function starPath(cx,cy,r,rot){let p='';for(let i=0;i<4;i++){const a=rot+i*Math.PI/2;
-    const pts=[[a,r],[a+Math.PI/4,r],[a+Math.PI/2,r],[a+3*Math.PI/4,r]];void pts;}
-    // مربعان متداخلان
-    const sq=(ang)=>{let d='';for(let k=0;k<4;k++){const t=ang+k*Math.PI/2;
-      d+=(k? 'L':'M')+(cx+r*Math.cos(t)).toFixed(1)+' '+(cy+r*Math.sin(t)).toFixed(1);}return d+'Z';};
-    return sq(rot);}
-  $('star8a').setAttribute('d',starPath(200,200,140,-Math.PI/2)+starPath(200,200,140,-Math.PI/4));
-  $('star8b').setAttribute('d',starPath(200,200,110,-Math.PI/2)+starPath(200,200,110,-Math.PI/4));
+  /* نجمة ثمانية (مربعان متداخلان) */
+  function sq(cx,cy,r,rot){var d='';for(var k=0;k<4;k++){var t=rot+k*Math.PI/2;
+    d+=(k?'L':'M')+(cx+r*Math.cos(t)).toFixed(1)+' '+(cy+r*Math.sin(t)).toFixed(1);}return d+'Z';}
+  $('star8a').setAttribute('d',sq(200,200,140,-Math.PI/2)+sq(200,200,140,-Math.PI/4));
+  $('star8b').setAttribute('d',sq(200,200,110,-Math.PI/2)+sq(200,200,110,-Math.PI/4));
 
   /* علامات الدرجات */
-  let t='';for(let d=0;d<360;d+=5){const big=d%45===0,med=d%15===0;
-    const r1=176,r2=big?158:med?164:169;
-    const a=(d-90)*Math.PI/180,c=Math.cos(a),s=Math.sin(a);
-    t+='<line x1="'+(200+r1*c).toFixed(1)+'" y1="'+(200+r1*s).toFixed(1)+
-       '" x2="'+(200+r2*c).toFixed(1)+'" y2="'+(200+r2*s).toFixed(1)+
+  var t='';for(var d=0;d<360;d+=5){var big=d%45===0,med=d%15===0;
+    var r1=176,r2=big?158:(med?164:169);
+    var a=(d-90)*Math.PI/180,c=Math.cos(a),sn=Math.sin(a);
+    t+='<line x1="'+(200+r1*c).toFixed(1)+'" y1="'+(200+r1*sn).toFixed(1)+
+       '" x2="'+(200+r2*c).toFixed(1)+'" y2="'+(200+r2*sn).toFixed(1)+
        '" stroke="'+(big?'#D9B45B':'#3A4470')+'" stroke-width="'+(big?2:1)+'"/>';}
   $('ticks').innerHTML=t;
 
-  const rad=x=>x*Math.PI/180, deg=x=>x*180/Math.PI, norm=x=>((x%360)+360)%360;
+  var rad=function(x){return x*Math.PI/180},deg=function(x){return x*180/Math.PI},
+      norm=function(x){return ((x%360)+360)%360};
 
   function qiblaBearing(lat,lng){
-    const φ1=rad(lat),φ2=rad(KAABA.lat),Δλ=rad(KAABA.lng-lng);
-    return norm(deg(Math.atan2(Math.sin(Δλ),Math.cos(φ1)*Math.tan(φ2)-Math.sin(φ1)*Math.cos(Δλ))));}
+    var f1=rad(lat),f2=rad(KAABA.lat),dl=rad(KAABA.lng-lng);
+    return norm(deg(Math.atan2(Math.sin(dl),Math.cos(f1)*Math.tan(f2)-Math.sin(f1)*Math.cos(dl))));}
   function distKm(lat,lng){
-    const R=6371,φ1=rad(lat),φ2=rad(KAABA.lat),dφ=rad(KAABA.lat-lat),dλ=rad(KAABA.lng-lng);
-    const a=Math.sin(dφ/2)**2+Math.cos(φ1)*Math.cos(φ2)*Math.sin(dλ/2)**2;
+    var R=6371,f1=rad(lat),f2=rad(KAABA.lat),df=rad(KAABA.lat-lat),dl2=rad(KAABA.lng-lng);
+    var a=Math.sin(df/2)*Math.sin(df/2)+Math.cos(f1)*Math.cos(f2)*Math.sin(dl2/2)*Math.sin(dl2/2);
     return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
 
-  let qibla=null, heading=null, shown=0, aligned=false;
+  var qibla=null,     // اتجاه القبلة
+      rawHeading=null,// آخر قراءة مرشّحة من المستشعر
+      shown=0,        // ما يُعرض على الشاشة
+      aligned=false,
+      usingAbsolute=false, // هل نستقبل من المستشعر المطلق؟
+      lowAccuracy=false;
 
   function setLocation(lat,lng){
     qibla=qiblaBearing(lat,lng);
@@ -214,71 +202,126 @@
     distEl.innerHTML='المسافة إلى مكة المكرمة <em>'+Math.round(distKm(lat,lng)).toLocaleString('ar-EG')+'</em> كم';
     qiblaG.setAttribute('transform','rotate('+qibla+' 200 200)');
     qiblaG.style.opacity=1;
-    if(heading===null){status.textContent='حرّك هاتفك على شكل ∞ لمعايرة البوصلة';}
   }
 
-  /* حركة ناعمة */
+  /* زاوية دوران الشاشة */
+  function screenAngle(){
+    if(screen.orientation && typeof screen.orientation.angle==='number') return screen.orientation.angle;
+    if(typeof window.orientation==='number') return window.orientation;
+    return 0;
+  }
+
+  /* معادلة البوصلة القياسية مع تعويض ميلان الجهاز (W3C) */
+  function compassHeading(alpha,beta,gamma){
+    var _x=rad(beta||0),_y=rad(gamma||0),_z=rad(alpha||0);
+    var cX=Math.cos(_x),cY=Math.cos(_y),cZ=Math.cos(_z);
+    var sX=Math.sin(_x),sY=Math.sin(_y),sZ=Math.sin(_z);
+    var Vx=-cZ*sY-sZ*sX*cY;
+    var Vy=-sZ*sY+cZ*sX*cY;
+    var h=Math.atan(Vx/Vy);
+    if(Vy<0)h+=Math.PI; else if(Vx<0)h+=2*Math.PI;
+    return norm(deg(h));
+  }
+
+  /* ترشيح القراءات: تنعيم أُسّي على أقصر قوس + منطقة ميتة ضد الرجفة */
+  function feedHeading(h){
+    h=norm(h+screenAngle());
+    if(rawHeading===null){rawHeading=h;return;}
+    var diff=((h-rawHeading+540)%360)-180;
+    if(Math.abs(diff)<0.6)return;            /* تجاهل الرجفة الدقيقة */
+    rawHeading=norm(rawHeading+diff*0.25);   /* تنعيم قوي */
+  }
+
+  function onAbsolute(e){
+    if(e.alpha==null)return;
+    usingAbsolute=true;
+    feedHeading(compassHeading(e.alpha,e.beta,e.gamma));
+  }
+
+  function onRegular(e){
+    /* آيفون: قراءة بوصلة حقيقية جاهزة */
+    if(typeof e.webkitCompassHeading==='number'&&!isNaN(e.webkitCompassHeading)){
+      lowAccuracy=(typeof e.webkitCompassAccuracy==='number'&&(e.webkitCompassAccuracy<0||e.webkitCompassAccuracy>30));
+      feedHeading(e.webkitCompassHeading);
+      return;
+    }
+    /* أندرويد: نقبل فقط القراءات المطلقة، ونتجاهل المستشعر النسبي المنجرف تمامًا */
+    if(usingAbsolute)return;
+    if(e.absolute===true&&e.alpha!=null)feedHeading(compassHeading(e.alpha,e.beta,e.gamma));
+  }
+
+  /* حلقة العرض بحركة ناعمة */
   function animate(){
-    if(heading!==null){
-      let diff=((heading-shown+540)%360)-180;
-      shown=norm(shown+diff*0.15);
+    if(rawHeading!==null){
+      var diff=((rawHeading-shown+540)%360)-180;
+      shown=norm(shown+diff*0.12);
       dial.style.transform='rotate('+(-shown)+'deg)';
       hDegEl.textContent=Math.round(shown)+'°';
       if(qibla!==null){
-        const off=Math.abs(((qibla-shown+540)%360)-180);
-        const ok=off<3.5;
+        var off=((qibla-shown+540)%360)-180;
+        var abs=Math.abs(off);
+        var ok=abs<3.5;
         if(ok!==aligned){aligned=ok;stage.classList.toggle('aligned',ok);
-          if(ok){status.textContent='✦ أنت الآن باتجاه القبلة ✦';status.classList.add('ok');
+          if(ok){statusEl.textContent='✦ أنت الآن باتجاه القبلة ✦';
+            statusEl.className='status ok';
             if(navigator.vibrate)navigator.vibrate([40,60,40]);}
-          else{status.classList.remove('ok');}}
-        if(!ok)status.textContent= off<20 ? 'اقتربت… '+Math.round(off)+'° فقط' :
-          'أدر جسمك '+(((qibla-shown+540)%360)-180>0?'يمينًا':'يسارًا');
+        }
+        if(!ok){
+          if(lowAccuracy){statusEl.textContent='حرّك الهاتف على شكل ∞ لمعايرة البوصلة';statusEl.className='status warn';}
+          else{statusEl.className='status';
+            statusEl.textContent= abs<20 ? ('اقتربت… '+Math.round(abs)+'° فقط')
+                                         : ('أدر جسمك '+(off>0?'يمينًا':'يسارًا'));}
+        }
+      } else {
+        statusEl.textContent='جارٍ تحديد موقعك…';
       }
     }
     requestAnimationFrame(animate);
   }
   requestAnimationFrame(animate);
 
-  function onOrient(e){
-    let h=null;
-    if(typeof e.webkitCompassHeading==='number'&&!isNaN(e.webkitCompassHeading)) h=e.webkitCompassHeading;
-    else if(e.absolute&&e.alpha!=null) h=360-e.alpha;
-    else if(e.alpha!=null&&h===null) h=360-e.alpha;
-    if(h!=null) heading=norm(h);
-  }
-
   function startSensors(){
     if('ondeviceorientationabsolute' in window)
-      window.addEventListener('deviceorientationabsolute',onOrient,true);
-    window.addEventListener('deviceorientation',onOrient,true);
+      window.addEventListener('deviceorientationabsolute',onAbsolute,true);
+    window.addEventListener('deviceorientation',onRegular,true);
+    /* إن لم تصل أي قراءة خلال 3 ثوانٍ: الجهاز بلا بوصلة مطلقة */
+    setTimeout(function(){
+      if(rawHeading===null){
+        statusEl.textContent='هاتفك لا يوفر بوصلة مطلقة — جرّب متصفح Chrome';
+        statusEl.className='status warn';
+      }
+    },3000);
   }
 
   function startGeo(){
     if(!navigator.geolocation){fail('المتصفح لا يدعم تحديد الموقع');return;}
     navigator.geolocation.getCurrentPosition(
-      p=>setLocation(p.coords.latitude,p.coords.longitude),
-      ()=>fail('تعذر تحديد الموقع — فعّل خدمة الموقع ثم أعد المحاولة'),
+      function(p){setLocation(p.coords.latitude,p.coords.longitude);},
+      function(){fail('تعذر تحديد الموقع — فعّل خدمة الموقع ثم أعد المحاولة');},
       {enableHighAccuracy:true,timeout:12000,maximumAge:600000});
   }
   function fail(msg){err.textContent=msg;err.style.display='block';veil.classList.remove('hide');}
 
-  $('startBtn').addEventListener('click',async()=>{
+  $('startBtn').addEventListener('click',function(){
     err.style.display='none';
-    try{
-      if(typeof DeviceOrientationEvent!=='undefined' &&
-         typeof DeviceOrientationEvent.requestPermission==='function'){
-        const r=await DeviceOrientationEvent.requestPermission();
-        if(r!=='granted'){fail('يجب السماح بالوصول إلى البوصلة');return;}
-      }
-    }catch(_){}
-    startSensors();startGeo();veil.classList.add('hide');
+    var p=Promise.resolve('granted');
+    if(typeof DeviceOrientationEvent!=='undefined'&&
+       typeof DeviceOrientationEvent.requestPermission==='function'){
+      p=DeviceOrientationEvent.requestPermission().catch(function(){return 'denied'});
+    }
+    p.then(function(r){
+      if(r!=='granted'){fail('يجب السماح بالوصول إلى البوصلة');return;}
+      startSensors();startGeo();veil.classList.add('hide');
+    });
   });
 
-  /* بدء فوري إن لم يتطلب النظام إذنًا (أندرويد غالبًا) */
-  if(!(typeof DeviceOrientationEvent!=='undefined' &&
+  /* بدء فوري على أندرويد (لا يتطلب إذنًا للمستشعر) */
+  if(!(typeof DeviceOrientationEvent!=='undefined'&&
        typeof DeviceOrientationEvent.requestPermission==='function')){
     startSensors();
-    setTimeout(()=>{ if(heading!==null){veil.classList.add('hide');startGeo();} },700);
+    setTimeout(function(){
+      if(rawHeading!==null){veil.classList.add('hide');startGeo();}
+    },700);
   }
 })();
 </script>
